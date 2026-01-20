@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "MainHUD.generated.h"
 
+class UUserWidget;
+
 /**
  * 
  */
@@ -14,4 +16,15 @@ class UNREAL_NET_EXAM_API AMainHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void BeginPlay() override;
+	inline TWeakObjectPtr<UUserWidget> GetMainHudWidget() const { return MainHudWidget; }
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UUserWidget> MainHudWidgetClass = nullptr;
+
+private:
+	UPROPERTY()
+	TWeakObjectPtr<UUserWidget> MainHudWidget = nullptr;
 };
