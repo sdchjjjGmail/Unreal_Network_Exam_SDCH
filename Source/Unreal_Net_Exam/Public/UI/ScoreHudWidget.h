@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "ScoreHudWidget.generated.h"
 
-class UDataLineWidget;
+class UScoreDataWidget;
 
 /**
  * 
@@ -24,7 +24,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (BindWidget))
-	TObjectPtr<UDataLineWidget> Score;
+	TObjectPtr<UScoreDataWidget> Score;
 
 private:
 	TWeakObjectPtr<class APlayerStateCharacter> OwningPlayerCharacter = nullptr;

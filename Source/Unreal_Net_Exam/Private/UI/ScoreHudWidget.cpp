@@ -2,12 +2,12 @@
 
 
 #include "UI/ScoreHudWidget.h"
+#include "UI/ScoreDataWidget.h"
 
 void UScoreHudWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Score->UpdateName(FText::FromString(TEXT("점수")));
 	Score->UpdateIntValue(0);
 }
 
