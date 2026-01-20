@@ -36,7 +36,7 @@ protected:
 	float GameElapsedTime = 0.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game Data")
-	float GameDuration = 5.f;
+	float GameDuration = 60.f;
 
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Game Data")
 	float GameRemainingTime = 0.f;
