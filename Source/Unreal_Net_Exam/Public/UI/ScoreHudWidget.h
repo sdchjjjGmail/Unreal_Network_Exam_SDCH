@@ -6,11 +6,11 @@
 #include "Blueprint/UserWidget.h"
 #include "ScoreHudWidget.generated.h"
 
+class UVerticalBox;
 class UScoreDataWidget;
+class AGameStateBase;
+class AExamPlayerState;
 
-/**
- * 
- */
 UCLASS()
 class UNREAL_NET_EXAM_API UScoreHudWidget : public UUserWidget
 {
@@ -18,14 +18,27 @@ class UNREAL_NET_EXAM_API UScoreHudWidget : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
-
-public:
-	void UpdateScore(int32 NewScore);
-
-protected:
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (BindWidget))
-	TObjectPtr<UScoreDataWidget> Score;
+	virtual void NativeDestruct() override;
 
 private:
-	TWeakObjectPtr<class APlayerStateCharacter> OwningPlayerCharacter = nullptr;
+	UFUNCTION()
+	void TryBuildScoreboard();
+
+	void BuildScoreboard(AGameStateBase* GS);
+
+private:
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UVerticalBox> ScoreList = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UScoreDataWidget> ScoreRowClass;
+
+private:
+	FTimerHandle BuildRetryHandle;
+
+	FTimerHandle WatchHandle;
+
+	bool bBuilt = false;
+
+	uint32 LastSignature = 0;
 };

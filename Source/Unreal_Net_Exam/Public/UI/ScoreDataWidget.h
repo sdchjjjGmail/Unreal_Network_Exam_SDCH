@@ -17,10 +17,18 @@ class UNREAL_NET_EXAM_API UScoreDataWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable)
-	void UpdateIntValue(int32 InValue);
+	void Init(class AExamPlayerState* InPS);
+
+	virtual void NativeDestruct() override;
+
+	UFUNCTION()
+	void OnScoreChanged(int32 NewScore);
 
 protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> Value = nullptr;
+
+private:
+	TWeakObjectPtr<AExamPlayerState> PS;
+	FDelegateHandle ScoreChangedHandle;
 };

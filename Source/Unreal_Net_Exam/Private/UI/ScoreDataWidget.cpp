@@ -3,8 +3,36 @@
 
 #include "UI/ScoreDataWidget.h"
 #include "Components/TextBlock.h"
+#include "Framework/ExamPlayerState.h"
 
-void UScoreDataWidget::UpdateIntValue(int32 InValue)
+void UScoreDataWidget::Init(AExamPlayerState* InPS)
 {
-	Value->SetText(FText::AsNumber(InValue));
+	PS = InPS;
+	if (!PS.IsValid()) return;
+
+	// 초기 값
+	OnScoreChanged(PS->GetMyScore());
+
+	// 점수 변경 구독
+	ScoreChangedHandle = PS->OnScoreChanged.AddUObject(
+		this, &UScoreDataWidget::OnScoreChanged
+	);
+}
+
+void UScoreDataWidget::OnScoreChanged(int32 NewScore)
+{
+	if (Value)
+	{
+		Value->SetText(FText::AsNumber(NewScore));
+	}
+}
+
+void UScoreDataWidget::NativeDestruct()
+{
+	if (PS.IsValid() && ScoreChangedHandle.IsValid())
+	{
+		PS->OnScoreChanged.Remove(ScoreChangedHandle);
+	}
+
+	Super::NativeDestruct();
 }

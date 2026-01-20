@@ -16,7 +16,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(Server, Reliable)
 	void Server_AddScore(int32 Point);

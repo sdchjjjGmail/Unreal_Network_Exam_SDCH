@@ -6,20 +6,12 @@
 
 APlayerCharacter::APlayerCharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
-
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
-}
-
-void APlayerCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void APlayerCharacter::Server_AddScore_Implementation(int32 Point)
@@ -35,6 +27,6 @@ void APlayerCharacter::TestAddScore()
 {
 	if (IsLocallyControlled())
 	{
-		Server_AddScore(10);
+		Server_AddScore(1);
 	}
 }

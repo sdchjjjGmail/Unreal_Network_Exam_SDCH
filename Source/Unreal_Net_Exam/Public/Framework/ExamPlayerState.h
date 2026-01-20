@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerState.h"
 #include "ExamPlayerState.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnScoreChanged, int32);
+
 /**
  * 
  */
@@ -27,10 +29,12 @@ protected:
 	UFUNCTION()
 	void OnRep_MyScore();
 
+public:
+	FOnScoreChanged OnScoreChanged;
+
 protected:
 	UPROPERTY(ReplicatedUsing = OnRep_MyScore, BlueprintReadOnly, Category = "Data")
 	int32 MyScore = 0;
 
 	TWeakObjectPtr<class UScoreHudWidget> ScoreHud = nullptr;
-
 };
