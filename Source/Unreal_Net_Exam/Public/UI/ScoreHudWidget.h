@@ -20,11 +20,25 @@ protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Game Data")
+	void UpdateTimeDisplay();
+
+	void UpdateGameOverDisplay();
+
 private:
 	UFUNCTION()
 	void TryBuildScoreboard();
 
 	void BuildScoreboard(AGameStateBase* GS);
+
+protected:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<class UTextBlock> RemainingTimeText = nullptr;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> ResultText = nullptr;
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -33,12 +47,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UScoreDataWidget> ScoreRowClass;
 
-private:
+	TWeakObjectPtr<class AExamGameState> CachedGameState = nullptr;
+
 	FTimerHandle BuildRetryHandle;
 
 	FTimerHandle WatchHandle;
 
 	bool bBuilt = false;
-
-	uint32 LastSignature = 0;
+	bool bResultShown = false;
 };

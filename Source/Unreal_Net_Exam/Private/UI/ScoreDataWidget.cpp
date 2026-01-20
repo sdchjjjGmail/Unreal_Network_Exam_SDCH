@@ -10,10 +10,8 @@ void UScoreDataWidget::Init(AExamPlayerState* InPS)
 	PS = InPS;
 	if (!PS.IsValid()) return;
 
-	// 초기 값
 	OnScoreChanged(PS->GetMyScore());
 
-	// 점수 변경 구독
 	ScoreChangedHandle = PS->OnScoreChanged.AddUObject(
 		this, &UScoreDataWidget::OnScoreChanged
 	);
